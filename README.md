@@ -1,4 +1,3 @@
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/reponomadx/ws1-sentinelone-installer/main/reponomadx-logo.jpg" alt="reponomadx logo" width="350"/>
 </p>
@@ -14,13 +13,14 @@
 
 ---
 
-Automated macOS installation of SentinelOne using Workspace ONE UEM and Munki.  
-This script was developed to address cases where standard app deployment methods fail to install the SentinelOne agent reliably.
+Automated macOS installation and upgrade of SentinelOne using Workspace ONE UEM and Munki.  
+This toolset was developed to address cases where standard app deployment methods fail to install or update the SentinelOne agent reliably.
 
 ---
 
 ## 📦 What It Does
 
+### `s1_install.sh`
 - ✅ Checks if SentinelOne is already installed  
 - 📁 Verifies the PKG exists in the Munki cache  
 - 🔐 Writes a registration token to disk  
@@ -28,11 +28,18 @@ This script was developed to address cases where standard app deployment methods
 - 🚀 Installs the SentinelOne agent using `installer`  
 - 🧹 Cleans up all temporary files  
 
+### `s1_upgrade.sh`
+- 🔍 Checks current installed SentinelOne version  
+- 🔁 Compares against expected version  
+- 📦 Copies upgrade PKG if out of date  
+- ⬆️ Performs in-place upgrade using `sentinelctl upgrade-pkg`  
+- 🧹 Cleans up staging files  
+
 ---
 
 ## 🧰 Requirements
 
-To use this script successfully in a Workspace ONE environment:
+To use these scripts successfully in a Workspace ONE environment:
 
 - SentinelOne `.pkg` must be present in Munki’s local cache  
 - A base64-encoded **registration token** must be provided by your SentinelOne console  
@@ -44,17 +51,18 @@ To use this script successfully in a Workspace ONE environment:
 
 ## 🚀 Deployment Method
 
-1. Add the script to Workspace ONE UEM under **Resources > Scripts**  
+1. Add the script(s) to Workspace ONE UEM under **Resources > Scripts**  
 2. Use **System context**  
-3. Run the script every 4 hours or as needed  
-4. Add a **Secure String** variable named `password`  
-5. Assign the script to your desired Smart Group (e.g., all macOS Workstations)
+3. Run `s1_install.sh` on devices that need initial deployment  
+4. Schedule `s1_upgrade.sh` to run periodically (e.g., every 4 hours)  
+5. Add a **Secure String** variable named `password`  
+6. Assign the script to your desired Smart Group (e.g., all macOS Workstations)
 
 ---
 
 ## ✍️ Customization
 
-Before deployment, update the following values in the script:
+Before deployment, update the following values in the scripts:
 
 ```bash
 TARGET_USER="Your_macOS_Service_Account"
@@ -62,14 +70,14 @@ echo "<Base64_SentinelOne_Token>" > "$TOKEN_FILE"
 ```
 
 Replace:
-- `Your_macOS_Service_Account` with the correct local user account
+- `Your_macOS_Service_Account` with the correct local user account  
 - `<Base64_SentinelOne_Token>` with your actual SentinelOne token (in base64 format)
 
 ---
 
 ## 🛑 Security Notice
 
-This script relies on Workspace ONE’s secure variable injection for authentication.  
+These scripts rely on Workspace ONE’s secure variable injection for authentication.  
 **Do not hardcode credentials or tokens.** Always use UEM variables for secrets.
 
 ---
