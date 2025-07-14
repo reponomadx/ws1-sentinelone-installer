@@ -14,11 +14,11 @@
 
 # Configuration
 CACHE_DIR="/Library/Application Support/AirWatch/Data/Munki/Managed Installs/Cache"
-PKG_NAME="Sentinel-Release-24-4-1-7830_macos_v24_4_1_7830-24.4.1.7830.pkg"
+PKG_NAME="Your_SentinelOne-PKG.pkg"
 S1_PKG="${CACHE_DIR}/${PKG_NAME}"
 TARGET_USER="Your_macOS_Service_Account"
 USER_DL="/Users/${TARGET_USER}/Downloads"
-EXPECTED_VERSION="24.4.1.7830"
+EXPECTED_VERSION="24.4.1.7830" #SentinelOne version being updated to
 
 # Function to run sudo commands using the password injected by WS1
 run_as_sudo() {
