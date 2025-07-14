@@ -21,7 +21,7 @@
 # Set install path and cached PKG path
 S1_INSTALL="/Applications/SentinelOne"
 CACHE_DIR="/Library/Application Support/AirWatch/Data/Munki/Managed Installs/Cache"
-S1_PKG="${CACHE_DIR}/Sentinel-Release-24-4-1-7830_macos_v24_4_1_7830-24.4.1.7830.pkg"
+S1_PKG="${CACHE_DIR}/Your_SentinelOne-PKG.pkg"
 TOKEN_FILE="${CACHE_DIR}/com.sentinelone.registration-token"
 TARGET_USER="Your_macOS_Service_Account"
 USER_DL="/Users/${TARGET_USER}/Downloads"
